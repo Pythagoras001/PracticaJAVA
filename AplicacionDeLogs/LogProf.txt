@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Archivo de configuración Log4j2 con:
+    - Uso de propiedades
+    - Logging a archivo con rotación
+    - Compresión de logs antiguos
+-->
+<Configuration status="info" strict="true" name="Log4j2Config">
+    <!--
+        status="info":
+        Nivel de logs internos de Log4j2 (para depuración del framework)
+
+        strict="true":
+        Log4j2 fallará si la configuración tiene errores
+        (útil para evitar configs mal definidas)
+
+        name="Log4j2Config":
+        Nombre lógico de la configuración
+    -->
+
+    <!-- ===== PROPIEDADES GLOBALES ===== -->
+    <Properties>
+        <!--
+            Patrón reutilizable para el formato del log
+        -->
+        <Property name="log_pattern">
+            %d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n
+        </Property>
+
+        <!--
+            Carpeta raíz donde se guardarán los logs
+        -->
+        <Property name="app_log_root">logs</Property>
+
+        <!--
+            Nombre base del archivo de log
+            ADT_${hostName} permite diferenciar logs por máquina
+        -->
+        <Property name="repaso_log">ADT_${hostName}</Property>
+    </Properties>
+
+    <!-- ===== APPENDERS ===== -->
+    <Appenders>
+
+        <!--
+            RollingFile:
+            Appender que escribe en archivo y lo rota
+            según tiempo y/o tamaño
+        -->
+        <RollingFile
+                name="FileLogger"
+                fileName="${app_log_root}/${repaso_log}.log"
+                filePattern="${app_log_root}/${repaso_log}-%d{yyyy-MM-dd}-%i.log.gz"
+                policy="Policies">
+
+            <!--
+                Formato del mensaje usando la propiedad definida arriba
+            -->
+            <PatternLayout pattern="${log_pattern}"/>
+
+            <!-- ===== POLÍTICAS DE ROTACIÓN ===== -->
+            <Policies>
+
+                <!--
+                    Rotación diaria:
+                    Crea un nuevo archivo cada día
+                -->
+                <TimeBasedTriggeringPolicy
+                        interval="1"
+                        modulate="true"/>
+
+                <!--
+                    Rotación por tamaño:
+                    Si el archivo supera los 100MB,
+                    se crea uno nuevo
+                -->
+                <SizeBasedTriggeringPolicy size="100MB"/>
+
+            </Policies>
+        </RollingFile>
+
+    </Appenders>
+
+    <!-- ===== LOGGERS ===== -->
+    <Loggers>
+
+        <!--
+            Root Logger:
+            Aplica a toda la aplicación
+        -->
+        <Root level="info">
+            <AppenderRef ref="FileLogger"/>
+        </Root>
+
+        <!--
+            Logger específico para el paquete com.example
+        -->
+        <Logger name="com.example"
+                level="debug"
+                additivity="false">
+            <!--
+                level="debug":
+                En este paquete se permiten DEBUG, INFO, WARN, ERROR
+
+                additivity="false":
+                Evita que los logs se dupliquen en el Root
+            -->
+            <AppenderRef ref="FileLogger"/>
+        </Logger>
+
+    </Loggers>
+
+</Configuration>
