@@ -1,0 +1,10 @@
+String NEGRO_BRILLANTE = "\u001B[90m";
+        String ROJO_BRILLANTE = "\u001B[91m";
+        String VERDE_BRILLANTE = "\u001B[92m";
+        String AMARILLO_BRILLANTE = "\u001B[93m";
+        String AZUL_BRILLANTE = "\u001B[94m";
+        String MORADO_BRILLANTE = "\u001B[95m";
+        String CYAN_BRILLANTE = "\u001B[96m";
+        String BLANCO_BRILLANTE = "\u001B[97m";
+
+public static final String RESET = "\u001B[0m";
