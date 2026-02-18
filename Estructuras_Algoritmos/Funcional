@@ -1,0 +1,14 @@
+// Filtrar
+List<T> resultado = lista.stream()
+    .filter(elemento -> condicion)
+    .collect(Collectors.toList());
+
+// Concatenacion
+String nombres = usuarios.stream()
+    .map(u -> u.getNombre())
+    .collect(Collectors.joining(", "));
+
+// Map
+List<Integer> numeros = textos.stream()
+    .map(t -> Integer.parseInt(t))
+    .collect(Collectors.toList());
