@@ -1,0 +1,10 @@
+Scanner sc = new Scanner(System.in);
+
+        System.out.print("Ingrese su edad: ");
+        String entrada = sc.nextLine();   // leer como texto
+
+        int edad = Integer.parseInt(entrada);  // convertir a entero
+
+        System.out.println("Edad: " + edad);
+
+        sc.close();
