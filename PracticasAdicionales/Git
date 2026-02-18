@@ -1,0 +1,16 @@
+// Crear un repo y subirlo
+mkdir mi-proyecto
+cd mi-proyecto
+git init
+git add .
+git commit -m "Primer commit"
+git remote add origin URL_DEL_REPOSITORIO
+git branch -M main
+git push -u origin main
+
+// Si es primera vez usando git
+git config --global user.name "Tu Nombre"
+git config --global user.email "tuemail@gmail.com"
+// Desloguearse
+git config --global --unset user.name
+git config --global --unset user.email
